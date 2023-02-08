@@ -31,11 +31,12 @@ enum Door {
 	Goat,
 }
 
+#[repr(u8)]
 #[derive(Debug)]
 enum Selection {
-	Door1,
-	Door2,
-	Door3,
+	Door1 = 0,
+	Door2 = 1,
+	Door3 = 2,
 }
 
 impl Distribution<Selection> for Standard {
@@ -71,7 +72,7 @@ fn monty_hall(switch_doors: bool) -> bool {
 	let mut player_selection: Selection = rand::random();
 
 	// The host opens a door.
-	let host_opening: Selection = match player_selection {
+	let host_opening = match player_selection {
 		Selection::Door1 => match doors[1] {
 			Door::Goat => Selection::Door2,
 			Door::Prize => Selection::Door3,
@@ -104,13 +105,9 @@ fn monty_hall(switch_doors: bool) -> bool {
 				Selection::Door2 => Selection::Door1,
 				_ => unreachable!(),
 			},
-		};
+		}
 	}
 
 	// The player wins if they selected the door with the prize.
-	match player_selection {
-		Selection::Door1 => doors[0] == Door::Prize,
-		Selection::Door2 => doors[1] == Door::Prize,
-		Selection::Door3 => doors[2] == Door::Prize,
-	}
+	doors[player_selection as usize] == Door::Prize
 }
