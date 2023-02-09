@@ -13,12 +13,12 @@ fn main() {
 		.map(|_| (monty_hall(false), monty_hall(true)))
 		.map(|(x, y)| (x as u32, y as u32))
 		.reduce(|| (0, 0), |(x1, y1), (x2, y2)| (x1 + x2, y1 + y2));
-	println!("Wins without switching doors: {}", wins_false);
+	println!("Wins without switching doors: {wins_false}");
 	println!(
 		"Win percentage without switching doors: {}%",
 		wins_false as f64 / max as f64 * 100.0
 	);
-	println!("Wins with switching doors: {}", wins_true);
+	println!("Wins with switching doors: {wins_true}");
 	println!(
 		"Win percentage with switching doors: {}%",
 		wins_true as f64 / max as f64 * 100.0
